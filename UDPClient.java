@@ -18,6 +18,7 @@ public class UDPClient extends PingClient{
     
     /** Crate an array for holding replies and RTTs */
     long [] RTTs = new long [10];
+    String [] Replies = new String [10];
 
     /* Send our own pings at least once per second. If no replies received
      within 5 seconds, assume ping was lost. */
@@ -116,7 +117,7 @@ public class UDPClient extends PingClient{
         }
         /* Print statistics */
         for (int i = 0; i < NUM_PINGS; i++) {
-            System.out.println("RTT " + i + " " + RTTs[i]);
+            System.out.println(i + ": The reply is " + Replies[i] + " and the RTT is " + RTTs[i]);
         }
 
     }
@@ -128,6 +129,7 @@ public class UDPClient extends PingClient{
         /* Calculate RTT and store it in the rtt-array. */
         long RTT = currTime - beforeTime;
         RTTs[numReplies] = RTT;
+        Replies[numReplies] = reply.trim();
         System.out.println("PING " + numReplies + " " + reply);
         numReplies++;
     }    
