@@ -1,4 +1,6 @@
 import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.nio.charset.StandardCharsets;
 import java.net.DatagramPacket;
 //import java.util.*;
 //import java.lang.Integer;
@@ -25,23 +27,32 @@ public class UDPServer {
         /** Let the user know the server is running **/
         System.out.println("The UDP server is listening on port " + port);
 
+        int count = 0;
+
         while (true) {
                     
                 /** Create a new datagram packet and let the socket receive it **/
                     DatagramPacket newPacket = new DatagramPacket(new byte[512], 512);
                     serverSocket.receive(newPacket);
                     /** Print the message received **/
+                    byte [] packetData = newPacket.getData();
                     //………..
+                    String message = new String(packetData, StandardCharsets.UTF_8);
+                    //long test = Long.parseLong(message);
+                    System.out.println("PING " + count + " " + message);
+                    count++;
                     
                     /** Get the IP Address of the Sender **/
-                    
+                    InetAddress ipAddr = newPacket.getAddress();
                     //……..
                     /** Get the port of the Sender **/
                     int senderPort = newPacket.getPort() ;
                     
                     /** Prepare the data to send back **/
-                    //. . . . .             
+                    //. . . . .
+                    DatagramPacket sendPacket = new DatagramPacket(packetData, 512, ipAddr, senderPort);             
                     /** Send the packet **/
+                    serverSocket.send(sendPacket);
                     //. . . . .
                     
         }
