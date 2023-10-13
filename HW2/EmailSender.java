@@ -38,7 +38,7 @@ public class EmailSender
       }
 
       // Send MAIL FROM command.
-      String mailCmd = "MAIL FROM: <alice@crepes.fr>";
+      String mailCmd = "MAIL FROM: <alice@crepes.fr>\r\n";
       System.out.print(mailCmd);
       os.write(mailCmd.getBytes("US-ASCII"));
       response = br.readLine();
@@ -49,7 +49,7 @@ public class EmailSender
       }
 
       // Send RCPT TO command.
-      String RCPTCmd = "RCPT TO: henry.wang@stonybrook.edu";
+      String RCPTCmd = "RCPT TO: henry.wang@stonybrook.edu\r\n";
       System.out.print(RCPTCmd);
       os.write(RCPTCmd.getBytes("US-ASCII"));
       response = br.readLine();
@@ -60,7 +60,7 @@ public class EmailSender
       }
 
       // Send DATA command.
-      String dataCmd = "DATA";
+      String dataCmd = "DATA\r\n";
       System.out.print(dataCmd);
       os.write(dataCmd.getBytes("US-ASCII"));
       response = br.readLine();
@@ -71,12 +71,12 @@ public class EmailSender
       }
 
       // Send message data.
-      String message = "SUBJECT: hello\nHi Henry, How's the weather? Alice.\n";
+      String message = "SUBJECT: hello\nHi Henry, How's the weather? Alice.\r\n";
       System.out.print(message);
       os.write(message.getBytes("US-ASCII"));
       
       // End with line with a single period.
-      String periodCmd = ".";
+      String periodCmd = ".\r\n";
       System.out.print(periodCmd);
       os.write(periodCmd.getBytes("US-ASCII"));
       response = br.readLine();
@@ -87,7 +87,7 @@ public class EmailSender
       }
 
       // Send QUIT command.
-      String quitCmd = "QUIT";
+      String quitCmd = "QUIT\r\n";
       System.out.print(quitCmd);
       os.write(quitCmd.getBytes("US-ASCII"));
       response = br.readLine();
