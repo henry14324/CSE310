@@ -33,26 +33,27 @@ public class HttpResponse {
         /* First read status line and response headers */
         try {
             String line = fromServer.readLine()/* Fill in */;
+            System.out.println("TESTLINE");
             while (line.length() != 0) {
-            if (!gotStatusLine) {
-                statusLine = line;
-                gotStatusLine = true;
-            } else {
-                headers += line + CRLF;
-            }
+                if (!gotStatusLine) {
+                    statusLine = line;
+                    gotStatusLine = true;
+                } else {
+                    headers += line + CRLF;
+                }
 
-            /* Get length of content as indicated by
-            * Content-Length header. Unfortunately this is not
-            * present in every response. Some servers return the
-            * header "Content-Length", others return
-            * "Content-length". You need to check for both
-            * here. */
-            if (line.startsWith("Content-Length") ||
-                line.startsWith("Content-length")) {
-                String[] tmp = line.split(" ");
-                length = Integer.parseInt(tmp[1]);
-            }
-            line = fromServer.readLine();
+                /* Get length of content as indicated by
+                * Content-Length header. Unfortunately this is not
+                * present in every response. Some servers return the
+                * header "Content-Length", others return
+                * "Content-length". You need to check for both
+                * here. */
+                if (line.startsWith("Content-Length") ||
+                    line.startsWith("Content-length")) {
+                    String[] tmp = line.split(" ");
+                    length = Integer.parseInt(tmp[1]);
+                }
+                line = fromServer.readLine();
             }
         } catch (IOException e) {
             System.out.println("Error reading headers from server: " + e);
