@@ -96,7 +96,7 @@ public class ProxyCache {
         
         while (true) {
             try {
-                client = new Socket(socket.getInetAddress(), port)/* Fill in */;
+                client = socket.accept()/* Fill in */;
                 handle(client);
             } catch (IOException e) {
             System.out.println("Error reading request from client: " + e);
