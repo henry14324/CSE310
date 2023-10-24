@@ -27,7 +27,7 @@ public class HttpRequest {
         String firstLine = "";
         try {
             firstLine = from.readLine();
-            System.out.println("Reading");
+            System.out.println("Reading request...");
         } catch (IOException e) {
             System.out.println("Error reading request line: " + e);
         }
