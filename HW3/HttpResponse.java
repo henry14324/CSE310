@@ -33,7 +33,6 @@ public class HttpResponse {
         /* First read status line and response headers */
         try {
             String line = fromServer.readLine()/* Fill in */;
-            System.out.println("TESTLINE");
             while (line.length() != 0) {
                 if (!gotStatusLine) {
                     statusLine = line;
@@ -79,7 +78,7 @@ public class HttpResponse {
             * response. */
             while (bytesRead < length || loop) {
                 /* Read it in as binary data */
-                int res = fromServer.read(buf)/* Fill in */;
+                int res = fromServer.read(buf, 0, Math.min(MAX_OBJECT_SIZE - bytesRead, BUF_SIZE))/* Fill in */;
                 if (res == -1) {
                     break;
                 }
@@ -87,7 +86,7 @@ public class HttpResponse {
                 * the maximum object size. */
                 for (int i = 0; i < res && (i + bytesRead) < MAX_OBJECT_SIZE; i++) {
                     /* Fill in */
-                    body[i] = buf[i];
+                    body[i + bytesRead] = buf[i];
                 }
                 bytesRead += res;
             }

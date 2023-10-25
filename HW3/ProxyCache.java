@@ -38,7 +38,11 @@ public class ProxyCache {
         /* Read request */
         try {
             BufferedReader fromClient = new BufferedReader(new InputStreamReader(client.getInputStream()));/* Fill in */;
+            System.out.println("Got connection Socket[addr=" + client.getLocalAddress() + ",port="
+            + client.getPort() + ",lcoalport=" + client.getLocalPort());
+            System.out.println("Reading request...");
             request = new HttpRequest(fromClient)/* Fill in */;
+            System.out.println("Got request...");
         } catch (IOException e) {
             System.out.println("Error reading request from client: " + e);
             return;
@@ -46,7 +50,7 @@ public class ProxyCache {
         /* Send request to server */
         try {
             /* Open socket and write request to socket */
-            server = new Socket("localhost", port)/* Fill in */;
+            server = new Socket(request.getHost(), request.getPort())/* Fill in */;
             DataOutputStream toServer = new DataOutputStream(server.getOutputStream())/* Fill in */; 
             /* Fill in */
             toServer.writeBytes(request.toString());
@@ -61,11 +65,12 @@ public class ProxyCache {
         /* Read response and forward it to client */
         try {
             DataInputStream fromServer = new DataInputStream(server.getInputStream())/* Fill in */;
-            System.out.println(server.getInputStream().readAllBytes());
+            //System.out.println(server.getInputStream().readAllBytes());
             response = new HttpResponse(fromServer)/* Fill in */;
             DataOutputStream toClient = new DataOutputStream(client.getOutputStream())/* Fill in */;
             /* Fill in */
             toClient.writeBytes(response.toString()); /* Write response to client. First headers, then body */
+            toClient.write(response.body);
             client.close();
             server.close();
         
