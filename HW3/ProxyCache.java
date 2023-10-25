@@ -47,11 +47,9 @@ public class ProxyCache {
         try {
             /* Open socket and write request to socket */
             server = new Socket("localhost", port)/* Fill in */;
-            System.out.println("Test 1");
-            DataOutputStream toServer = new DataOutputStream(server.getOutputStream())/* Fill in */;
+            DataOutputStream toServer = new DataOutputStream(server.getOutputStream())/* Fill in */; 
             /* Fill in */
             toServer.writeBytes(request.toString());
-            System.out.println("Test 2");
         } catch (UnknownHostException e) {
             System.out.println("Unknown host: " + request.getHost());
             System.out.println(e);
@@ -63,8 +61,8 @@ public class ProxyCache {
         /* Read response and forward it to client */
         try {
             DataInputStream fromServer = new DataInputStream(server.getInputStream())/* Fill in */;
+            System.out.println(server.getInputStream().readAllBytes());
             response = new HttpResponse(fromServer)/* Fill in */;
-            System.out.println("Test 3");
             DataOutputStream toClient = new DataOutputStream(client.getOutputStream())/* Fill in */;
             /* Fill in */
             toClient.writeBytes(response.toString()); /* Write response to client. First headers, then body */
